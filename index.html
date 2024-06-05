@@ -88,12 +88,12 @@
   </main>
   <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
-    window.TrackJS && TrackJS.install({ 
+    window.TrackJS && TrackJS.install({
       token: "6c725546d95c430880ec8181043243df"
       // for more configuration options, see https://docs.trackjs.com
     });
   </script>
-                          
+
   <script>
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -103,91 +103,94 @@
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
       try {
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
-    } catch (error) {
-      console.error("An error occurred:", error);
-    }
+        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      } catch (error) {
+        console.error("An error occurred:", error);
+      }
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
     errorBtns.forEach(button => {
-    button.addEventListener('click', () => {
-      switch (button.textContent) {
-        case 'Console Log':
-          console.log('This is a console log message');
-          break;
-        case 'Console Error':
-          console.error('This is a console error message');
-          break;
-        case 'Console Count':
-          console.count('Counter');
-          break;
-        case 'Console Warn':
-          console.warn('This is a console warning message');
-          break;
-        case 'Console Assert':
-          console.assert(false, 'This is a console assertion failed message');
-          break;
-        case 'Console Clear':
-          console.clear();
-          break;
-        case 'Console Dir':
-          console.dir(document.body);
-          break;
-        case 'Console dirxml':
-          console.dirxml(document.body);
-          break;
-        case 'Console Group Start':
-          console.group('Console Group');
-          console.log('Inside group');
-          console.groupEnd('Console Group');
-          break;
-        case 'Console Group End':
-          console.groupEnd();
-          break;
-        case 'Console Table':
-          console.table([{ name: "John", age: 30 }, { name: "Jane", age: 25 }]);
-          break;
-        case 'Start Timer':
-          console.time('Timer');
-          break;
-        case 'End Timer':
-          console.timeEnd('Timer');
-          break;
-        case 'Console Trace':
-          console.trace('Trace message');
-          break;
-        case 'Trigger a Global Error':
-          nonExistentFunction();
-          break;
-      }
+      button.addEventListener('click', () => {
+        switch (button.textContent) {
+          case 'Console Log':
+            console.log('This is a console log message');
+            break;
+          case 'Console Error':
+            console.error('This is a console error message');
+            break;
+          case 'Console Count':
+            console.count('Counter');
+            break;
+          case 'Console Warn':
+            console.warn('This is a console warning message');
+            break;
+          case 'Console Assert':
+            console.assert(false, 'This is a console assertion failed message');
+            break;
+          case 'Console Clear':
+            console.clear();
+            break;
+          case 'Console Dir':
+            console.dir(document.body);
+            break;
+          case 'Console dirxml':
+            console.dirxml(document.body);
+            break;
+          case 'Console Group Start':
+            console.group('Console Group');
+            console.log('Inside group');
+            console.groupEnd('Console Group');
+            break;
+          case 'Console Group End':
+            console.groupEnd();
+            break;
+          case 'Console Table':
+            console.table([{ name: "John", age: 30 }, { name: "Jane", age: 25 }]);
+            break;
+          case 'Start Timer':
+            console.time('Timer');
+            break;
+          case 'End Timer':
+            console.timeEnd('Timer');
+            break;
+          case 'Console Trace':
+            console.trace('Trace message');
+            break;
+          case 'Trigger a Global Error':
+            nonExistentFunction();
+            break;
+        }
+      });
     });
-  });
 
-  class CustomError extends Error {
-    constructor(message) {
-      super(message);
-      this.name = "CustomError";
+    class CustomError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = "CustomError";
+      }
     }
-  }
 
-  try {
-    throw new CustomError("This is a custom error message");
-  } catch (error) {
-    console.error(error.name + ": " + error.message);
-  }
-  window.onerror = function (message, source, lineno, colno, error) {
-    if (window.TrackJS) {
-      TrackJS.track(error);
+    try {
+      throw new CustomError("This is a custom error message");
+    } catch (error) {
+      console.error(error.name + ": " + error.message);
+    } finally {
+      console.log("Custom error handled");
     }
-    console.log("Global error caught: ", message);
-    return true;
-  };
 
-  document.querySelector('button[textContent="Trigger a Global Error"]').addEventListener('click', () => {
-    nonExistentFunction(); 
-  });
+    window.onerror = function (message, source, lineno, colno, error) {
+      if (window.TrackJS) {
+        TrackJS.track(error);
+      }
+      console.log("Global error caught: ", message);
+      return true;
+    };
+
+    document.querySelector('button[textContent="Trigger a Global Error"]').addEventListener('click', () => {
+      nonExistentFunction();
+    });
   </script>
 </body>
 
